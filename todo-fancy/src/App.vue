@@ -1,56 +1,25 @@
 <template>
   <div id="app">
-          <todo-list :todos="todos" @createTodo="addTodo" @deleteTodo="deleteTodo"
-          @completedTask="completedTask"></todo-list>
-    <!-- <router-view/> -->
+          <todo-header></todo-header>
+          <router-view></router-view>
+          <todo-footer></todo-footer>
   </div>
 </template>
 
 <script>
 /* eslint-disable */
-import TodoList from "./components/TodoList";
-
+import TodoHeader from './components/TodoHeader'
+import TodoFooter from './components/TodoFooter'
 export default {
   name: "App",
-  components: {
-    TodoList
+  components : {
+    TodoHeader,
+    TodoFooter
   },
   data() {
     return {
-      todos: [
-        {
-          id: "1",
-          task: "Makan Nasi Padang",
-          isDone: true
-        },
-        {
-          id: "2",
-          task: "Makan Nasi Kucing",
-          isDone: false
-        },
-        {
-          id: "3",
-          task: "Coding Javascript",
-          isDone: false
-        }
-      ]
     };
   },
-  methods : {
-    addTodo(task){
-      this.todos.push({
-        id : "4",
-        task,
-        isDone : false
-      })
-    },
-    deleteTodo(todo){
-      console.log('delete Todo', todo);
-    },
-    completedTask(todo){
-      console.log('completed task vue', todo)
-    }
-  }
 };
 </script>
 <style>
@@ -59,7 +28,32 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* text-align: center; */
-  color: #2c3e50;
+  color: #1e2a36;
   margin-top: 60px;
 }
+
+.form-group.invalid input {
+  border: 1px solid red;
+  background-color: #f2dede;
+}
+
+.form-group input:focus {
+  border: none;
+  outline: 0;
+  box-shadow: 0px;
+}
+.error {
+  font-size: 11px;
+  color: red;
+}
+
+.alert {
+  font-size: 12px;
+}
+
+.btn:active:focus{
+  outline: none;
+  /* /* border: none; */
+}
+
 </style>

@@ -6,5 +6,6 @@ const userController = require('../controllers/userController');
 //     res.send('login ok')
 // })
 router.post('/', userController.loginUser);
+router.post('/viafb', userController.loginViaFb);
 
 module.exports = router;

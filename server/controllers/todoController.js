@@ -20,6 +20,7 @@ module.exports = {
     showTodo : (req,res)=>{
         const userId  = req.user.id;
         Todo.find({userId})
+        .sort({createdAt:'desc'})
         .populate('userId')
         .then(todos=>{
             res.status(200).json({message: 'retrieve success', todos})
@@ -51,9 +52,10 @@ module.exports = {
     },
     doneTodo : (req,res)=>{
         const id = req.params.id
+        const isDone = req.body.isDone
         Todo.findByIdAndUpdate(
             {_id : id},
-        {$set : {isDone:true}})
+        {$set : {isDone}})
         .then(result=>{
             res.status(200).json({message: "Task Done!", result})
         })

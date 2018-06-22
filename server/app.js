@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 require('dotenv').config();
+const cors = require('cors');
 const indexRoutes = require('./routes/index');
 const todosRoutes = require('./routes/todos');
 const registerRoutes = require('./routes/register');
@@ -13,7 +14,7 @@ const url = `mongodb://localhost:27017/${dbName}`;
 const port = process.env.PORT || 3000;
 
 mongoose.connect(url);
-
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use('/',indexRoutes);
