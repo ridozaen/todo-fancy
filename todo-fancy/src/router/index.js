@@ -13,7 +13,15 @@ export default new Router({
     {
       path: '/',
       name: 'Home',
-      component: Home
+      component: Home,
+      beforeEnter: (to, from, next) => {
+        if (localStorage.getItem("curr-token")) {
+          console.log('before enter component')
+          next()
+        } else {
+          next('/login')
+        }
+      }
     },
     {
       path: '/login',
@@ -24,7 +32,18 @@ export default new Router({
     {
       path: '/register',
       name: 'Register',
-      component: Register
+      component: Register,
+      beforeEnter: (to, from, next) => {
+        if (localStorage.getItem("curr-token")) {
+          next('/')
+        } else {
+          next()
+        }
+      }
+    },
+    {
+      path: '*',
+      redirect: '/'
     }
   ]
 })

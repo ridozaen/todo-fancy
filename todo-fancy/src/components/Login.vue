@@ -48,7 +48,7 @@ import { required, email } from "vuelidate/lib/validators";
 import axios from "axios";
 import { eventBus } from "../main";
 
-const baseUrl = "http://localhost:3000";
+// const baseUrl = "http://localhost:3000";
 export default {
   /* eslint-disable */
   data() {
@@ -81,7 +81,7 @@ export default {
           fbId: this.fbId
         };
         axios
-          .post(`${baseUrl}/login`, loginData)
+          .post(`/login`, loginData)
           .then(result => {
             console.log(result);
             this.token = result.data.token;
@@ -129,7 +129,7 @@ export default {
       // get token from backend
       let fbtoken = response.authResponse.accessToken;
       axios
-        .post(`${baseUrl}/login/viafb`, {}, { headers: { fbtoken } })
+        .post(`/login/viafb`, {}, { headers: { fbtoken } })
         .then(result => {
           console.log(result.data);
           this.token = result.data.token;

@@ -5,20 +5,15 @@ import Vuelidate from 'vuelidate'
 import App from './App'
 import router from './router'
 import './fbsdk'
+import axios from 'axios'
 
 export const eventBus = new Vue()
 
-Vue.use(Vuelidate);
+axios.defaults.baseURL = 'http://localhost:3000'
+
+Vue.use(Vuelidate)
 
 Vue.config.productionTip = false
-
-// Vue.directive("auto-focus", {
-//   bind: function () {
-//     Vue.nextTick(function () {
-//       this.$el.focus();
-//     }.bind(this));
-//   }
-// });
 
 /* eslint-disable no-new */
 new Vue({

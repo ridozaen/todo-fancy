@@ -1,6 +1,7 @@
 <template>
     <div class="container">
         <div class="row">
+            <todo-weather></todo-weather>
             <div class="col-sm-4 offset-sm-4 p-2">
                 <div class="input-group mb-3">
                     <input type="text" placeholder="What Todo?" class="form-control" ref="task" @keyup.enter="createTodo">
@@ -37,6 +38,7 @@
 
 <script>
 /* eslint-disable */
+import TodoWeather from "./Weather";
 import Todo from "./Todo";
 //filter todos function
 var filters = {
@@ -89,7 +91,8 @@ export default {
   //       this.props.todos
   //   },
   components: {
-    Todo
+    Todo,
+    TodoWeather
   },
   props: ["todos"]
 };

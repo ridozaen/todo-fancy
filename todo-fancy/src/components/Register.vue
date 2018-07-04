@@ -51,7 +51,7 @@
 import { required, email, minLength } from "vuelidate/lib/validators";
 import axios from "axios";
 
-const baseUrl = "http://localhost:3000";
+// const baseUrl = "http://localhost:3000";
 const alphaNum = value => {
   return /(?=.*?[0-9])/.test(value);
 };
@@ -90,7 +90,7 @@ export default {
             password: this.password,
             email: this.email
         }
-        axios.post(`${baseUrl}/register`,regData)
+        axios.post(`/register`,regData)
         .then(result=>{
             let username = result.data.user.username
             this.submitStatus = "OK";

@@ -8,8 +8,9 @@
 /* eslint-disable */
 import TodoList from "./TodoList";
 import axios from "axios";
+import swal from "sweetalert2";
 
-const baseUrl = "http://localhost:3000";
+// const baseUrl = "http://localhost:3000";
 
 export default {
   name: "Home",
@@ -26,7 +27,7 @@ export default {
   methods: {
     getTodos() {
       axios
-        .get(`${baseUrl}/todos`, { headers: { Authorization: this.token } })
+        .get(`/todos`, { headers: { Authorization: this.token } })
         .then(response => {
           this.todos = response.data.todos;
           console.log(response.data);
@@ -37,11 +38,7 @@ export default {
     },
     addTodo(task) {
       axios
-        .post(
-          `${baseUrl}/todos`,
-          { task },
-          { headers: { Authorization: this.token } }
-        )
+        .post(`/todos`, { task }, { headers: { Authorization: this.token } })
         .then(response => {
           this.todos.unshift(response.data.result);
           console.log(response.data);
@@ -50,20 +47,37 @@ export default {
           console.log("error", err.response);
         });
     },
-    updateTodo(todo){
-      console.log('update todo', todo)
-      axios.put(`${baseUrl}/todos/${todo._id}`,{task:todo.task}, {headers: {Authorization: this.token}})
-      .then((response)=>{
-        console.log(response.data)
-      })
-      .catch(err=>{
-        console.log("error", err.response)
-      })
+    updateTodo(todo) {
+      if (todo.isDone) {
+            swal({
+              type: "error",
+              title: "Oops...",
+              text: "Task is done cannot be modified"
+            });        
+      } else {
+        axios
+          .put(
+            `/todos/${todo._id}`,
+            { task: todo.task },
+            { headers: { Authorization: this.token } }
+          )
+          .then(response => {
+            console.log(response.data);
+          })
+          .catch(err => {
+            swal({
+              type: "error",
+              title: "Oops...",
+              text: err
+            });
+            console.log("error", err.response);
+          });
+      }
     },
     deleteTodo(todo) {
       console.log("delete Todo", todo);
       axios
-        .delete(`${baseUrl}/todos/${todo._id}`, {
+        .delete(`/todos/${todo._id}`, {
           headers: { Authorization: this.token }
         })
         .then(response => {
@@ -77,23 +91,28 @@ export default {
     },
     completedTask(todo) {
       console.log("completed task home", todo);
-      axios.put(`${baseUrl}/todos/done/${todo._id}`,{isDone: todo.isDone}, {headers: {Authorization: this.token}})
-      .then(response=>{
-        console.log("task completed", response.data)
-      })
-      .catch(err=>{
-        console.log("error", err.response)
-      })
+      axios
+        .put(
+          `/todos/done/${todo._id}`,
+          { isDone: todo.isDone },
+          { headers: { Authorization: this.token } }
+        )
+        .then(response => {
+          console.log("task completed", response.data);
+        })
+        .catch(err => {
+          console.log("error", err.response);
+        });
     }
   },
   created: function() {
     this.token = localStorage.getItem("curr-token");
     console.log("create home");
-    if (!this.token) {
-      this.$router.push({ name: "Login" });
-    } else {
-      this.getTodos();
-    }
+    // if (!this.token) {
+    // this.$router.push({ name: "Login" });
+    // } else {
+    this.getTodos();
+    // }
   }
 };
 </script>
